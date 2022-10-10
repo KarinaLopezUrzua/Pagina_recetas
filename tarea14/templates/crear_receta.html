@@ -1,0 +1,77 @@
+{% extends "index.html"%}
+
+{% block contenido %}
+
+<div>
+<h2 class="text-center">Crea tu Receta</h2> 
+<a class="d-grid gap-2 d-md-flex justify-content-md-end" href="/borrar_sesion" >Cerrar sesión</a>
+</div>
+<hr  class="border border-secondary border-2 opacity-50" >
+
+<div>
+    <div>
+        {% with messages_info = get_flashed_messages(category_filter=['crear']) %}
+        <!-- declara una variable llamada mensajes-->
+        {% if messages_info %}
+        <!-- comprobar si hay algún mensaje -->
+            {% for crear in messages_info %}
+        <!-- recorrer los mensajes -->
+                <p class="alert alert-danger text-center">
+                    {{crear}}
+                </p> <!-- muestra cada mensaje en una etiqueta de párrafo -->
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+
+    <form class="row g-3" action='/crear_receta' method='post'>
+        <!--action: es la ruta que procesa el formulario // method: las opciones son GET y POST-->
+        <div class="col-md-9">
+            <label for='name' class="form-label">Nombre</label>
+            <input type='text' class="form-control" name='nombre'>
+        </div>
+
+        <div class="col-md-9">
+            <label for='descripcion' class="form-label">Descripción</label>
+            <textarea class="form-control" name='descripcion' rows="4" cols="40"></textarea>
+        </div>
+
+        <div class="col-md-9">
+            <label for='instrucciones' class="form-label">Instrucciones</label>
+            <textarea class="form-control" name='instrucciones' rows="4" cols="40"></textarea>
+        </div>
+<!--    </form>-->
+</div>
+
+<!--EMIPEZA DONDE SALE LA FECHA-->
+
+<div class="col">
+    <div class="col-md-6">
+        <label for='fecha_creacion' class="form-label">Fecha de Creación</label>
+        <input type='date' class="form-control" name='fecha_creacion'>
+    </div><br>
+    <div class="col-md-9"> <p class="form-label">¿Su preparación es menor a 30 minutos?</p>
+        <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value = "1" name="tiempo_preparacion">
+        <label class="form-check-label" for="flexRadioDefault1">Si</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input  class="form-check-input" type="radio" value = "0" name="tiempo_preparacion">
+        <label class="form-check-label" for="flexRadioDefault1">No</label>
+    </div>
+    </div><br>
+        <div class="d-grid gap-2 d-md-flex justify-content-md">
+            <input type ="hidden" value="{{session['id_usuario']}}" name="usuario_id"> 
+            <button type="submit" class="btn btn-success me-md-2">Crear receta</button>
+            <a href="/usuario/{{session['id_usuario']}}" class="btn btn-secondary">Volver atras</a>
+            <a href="/" class="btn btn-primary">Volver al inicio</a>
+        </div>
+</div>
+</form>
+</div>
+
+{% endblock %}

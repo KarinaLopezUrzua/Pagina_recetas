@@ -1,0 +1,37 @@
+{% extends "index.html"%}
+
+{% block contenido %}
+
+<h1 class="text-center">Información de la Receta</h1>
+<a class="d-grid gap-2 d-md-flex justify-content-md-end" href="/borrar_sesion">Cerrar sesión</a>
+<hr class="border border-secondary border-2 opacity-50">
+
+<h2>Bienvenido {{session["nombre_usuario"]}}</h2>
+
+<div class="card">
+    <h5 class="card-header">Receta de {{ver_receta.nombre}}</h5>
+    <h6 class="card text-end">Creada por {{ver_receta.usuario[0].nombre}}</h6>
+    <div class="card-body">
+        <h5 class="card-title">Descripción</h5>
+        <p class="card-text">{{ ver_receta.descripcion }}</p>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Menor a 30 minutos</h5>
+        {% if ver_receta.tiempo_preparacion == "1" %}
+        <p class="card-text">Si</p>
+        {% else %}
+        <p class="card-text">Si</p>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Instrucciones</h5>
+        <p class="card-text">{{ver_receta.instrucciones}}</p>
+    </div>
+</div>
+
+<div><br>
+    <a href="/" class="btn btn-primary">Volver al inicio</a>
+    <a href="/usuario/{{session['id_usuario']}}" class="btn btn-secondary">Volver atras</a>
+
+</div>
+{% endblock %}
