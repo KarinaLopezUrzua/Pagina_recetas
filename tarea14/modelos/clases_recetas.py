@@ -52,7 +52,7 @@ class Recetas:
         query = "SELECT * FROM recetas JOIN usuarios ON recetas.usuario_id = usuarios.id;" 
         results = conectarMySQL('recetas_schema').query_db(query) 
         if len(results) < 1:
-            return False
+            return []
         todas_recetas_usuario_instancias = []   #creamos lista vacia que contiene todas las recetas
         for receta_variable in results:
             objeto_receta = cls(receta_variable) #la receta la hacemos un objeto
