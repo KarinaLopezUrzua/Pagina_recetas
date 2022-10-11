@@ -1,7 +1,6 @@
 from tarea14 import app
 from flask import render_template, redirect, session, request 
 from tarea14.modelos.clases_recetas import Recetas
-from flask import flash
 
 @app.route("/crear_receta") #ruta que se redigire action del formulario
 def formulario_receta():

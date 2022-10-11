@@ -66,7 +66,7 @@ class Usuarios:
         if len(usuario['apellido']) < 2:
             flash("ATENCIÓN ¡APELLIDO debe tener al menos 2 caracteres!") 
             validar = False
-        if len(usuario['fnacimiento']) < 1:
+        if (usuario['fnacimiento']) == "":
             flash("ATENCIÓN ¡Debe seleccionar una FECHA DE NACIMIENTO!") 
             validar = False
         if not CONTRASENA_REGEX.match(usuario['contraseña']): #contraseña debe tener minimo 6 caracteres, mayuscula, minuscula y caracter especial
@@ -82,3 +82,7 @@ class Usuarios:
             flash("ATENCIÓN ¡La direccion de EMAIL ya existe!") #como estamos llamando a un metodo debemos ENVIAMOS UN DICCIONARIO, por eso creamos la variable
             validar = False #en los metodos estaticos hay que llamar a metodos de clase
         return validar
+
+    @staticmethod
+    def validar_fecha(usuario1):
+        format

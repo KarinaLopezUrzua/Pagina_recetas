@@ -2,6 +2,7 @@ from tarea14 import app
 from flask import render_template, redirect, session, request 
 from tarea14.modelos.clases_usuarios import Usuarios
 from tarea14.modelos.clases_recetas import Recetas #importamos la clase de recetas para obtener todas las recetas
+from flask import jsonify
 
 from flask import flash
 from flask_bcrypt import Bcrypt
@@ -20,14 +21,15 @@ def crear_usuario():
     datos = { #creamos un diccionario que obtendra la informacion de nuestro formulario
         "nombre":request.form["nombre"], #["nombre"] es el name que se coloco en el imput del formulario
         "apellido":request.form["apellido"],
+        "fecha_nacimiento":request.form["fnacimiento"],
         "email":request.form["email"],
         "contraseña": contrasena_encriptada, 
     }
+    print(datos)
     if not Usuarios.validar_formulario(request.form): #validacion
         print(datos)
         # redirigir a la ruta donde se renderiza el formulario 
         return redirect('/')
-    print(datos)
     id_usuario = Usuarios.registro_usuario(datos) #le agregamos una variable para poder retornar un numero y asi traquear al usuario para darle seguimiento con session. se llama al metodo para guardar la informacion en la base de datos
     print(id_usuario)
     session["id_usuario"] = id_usuario #estamos almacenando la variable en una clave llamada id_usuario. esta llave va a contener el numero del usuario creado
@@ -67,8 +69,8 @@ def ver_usuario(id_usuario):
     return render_template("info_recetas.html", lista_recetas=todas_las_recetas_con_usuario, id_usuario=session["id_usuario"])
 
 @app.errorhandler(404)
-def pagina_no_encontrada():
-    return  'ESTA RUTA NO FUE ENCONTRADA', 404  
+def invalid_route(e): 
+    return jsonify({'errorCode' : 404, 'message' : 'Route not found'})
 
 @app.route("/borrar_sesion") #elimina el contenido almacenado en todas las sesiones
 def eliminar_sesion():
